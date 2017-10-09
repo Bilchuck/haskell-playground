@@ -3,5 +3,5 @@
 ## For usage: 
 * download ghci
 * run in command line -> ghci
-* :l filename.hs
+* for running file -> :l filename.hs
 * :h for help
