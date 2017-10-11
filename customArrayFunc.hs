@@ -1,3 +1,8 @@
+module CustomArrayFunc where
+
+import Data.Map (Map)
+import qualified Data.Map as Map
+
 foldl' :: (c -> a -> c) -> c -> [a] -> c
 foldl' _ start [] = start
 foldl' fn value (x:xs) = foldl' fn (fn value x) xs
@@ -36,3 +41,28 @@ quicksort (x:xs) =
 
 reverse' :: [a] -> [a]
 reverse' = foldr(\x acc -> acc ++ [x]) []
+
+-- O(n)
+haveSumSortedList :: Int -> [Int] -> Bool
+haveSumSortedList _ [] = False
+haveSumSortedList _ [x] = False
+haveSumSortedList sum list@(x: xs) = case lastPlusFirst `compare` sum of 
+    EQ -> True
+    LT -> haveSumSortedList sum xs
+    GT -> haveSumSortedList sum (init list)
+    where lastPlusFirst = x + last (xs)
+-- haveSumSortedList 10 [1,2,3,4,6]
+
+-- O(n) but with cache
+haveSumList :: Int -> [Int] -> Bool
+haveSumList sum xs = haveSumList' sum xs []
+
+haveSumList' :: Int -> [Int] -> [Int] -> Bool
+haveSumList' _ [] _     = False
+haveSumList' _ [x] _    = False
+haveSumList' sum (x:xs) cache = if x `elem` cache 
+    then True 
+    else haveSumList' sum xs (extractSum x : cache)
+    where extractSum = ((-) sum) 
+-- haveSumList 10 [100, 2, 1, 1, 4, 3, 6, 20]
+

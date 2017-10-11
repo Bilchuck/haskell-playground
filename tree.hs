@@ -1,3 +1,6 @@
+module Tree where
+import CustomArrayFunc
+
 -- binary tree
 
 data Tree a = EmptyTree | Node a (Tree a) (Tree a) deriving (Show, Read, Ord, Eq)
@@ -39,3 +42,7 @@ treeInsert el tree@(Node x left right) = case el `compare` x of
     GT -> Node x left (treeInsert el right)
 
 -- treeInsert 6 tree''
+
+bigTree = foldr' treeInsert EmptyTree [1..100]
+
+main = putStrLn $ show $ treeElem 71 bigTree
