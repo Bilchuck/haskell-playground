@@ -1,8 +1,5 @@
 module CustomArrayFunc where
 
-import Data.Map (Map)
-import qualified Data.Map as Map
-
 foldl' :: (c -> a -> c) -> c -> [a] -> c
 foldl' _ start [] = start
 foldl' fn value (x:xs) = foldl' fn (fn value x) xs
@@ -66,3 +63,19 @@ haveSumList' sum (x:xs) cache = if x `elem` cache
     where extractSum = ((-) sum) 
 -- haveSumList 10 [100, 2, 1, 1, 4, 3, 6, 20]
 
+delIndex' :: Int -> [a] -> [a]
+delIndex' n xs 
+    | n < 0 = xs
+    | otherwise = (take' n xs) ++ (drop' (n + 1) xs)
+
+take' :: Int -> [a] -> [a]
+take' n (x:xs)
+    | n == 0 = []
+    | n < 0 = []
+    | n > 0 = x:(take' (n - 1) xs)
+
+drop' :: Int -> [a] -> [a]
+drop' n all@(_:xs)
+    | n == 0 = all
+    | n < 0 = []
+    | n > 0 = drop' (n - 1) xs
